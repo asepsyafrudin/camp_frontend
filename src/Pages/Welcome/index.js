@@ -15,13 +15,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getDataLogApi, getMasterPlantApi } from "../../Config/API";
 import GraphGauge from "../../Component/GraphGauge";
+import moment from "moment";
+import { DataGrid } from "@mui/x-data-grid";
+import { round } from "../../Config/function";
 
 // ================================|| LOGIN ||================================ //
 
 export default function Welcome() {
   const [data, setData] = useState([]);
   const [plantActive, setPlantActive] = useState("");
+  const [date, setDate] = useState(new Date());
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
@@ -78,6 +88,43 @@ export default function Welcome() {
   const toLoginForm = () => {
     navigate("/login");
   };
+
+  const columns = [
+    {
+      field: "plant_name",
+      headerName: "Plane Name",
+      width: 200,
+    },
+    {
+      field: "ph",
+      headerName: "PH",
+      width: 150,
+    },
+    {
+      field: "temperature",
+      headerName: "Temperature",
+      width: 150,
+      valueFormatter: (value) => {
+        return round(value, 3);
+      },
+    },
+    {
+      field: "humidity",
+      headerName: "Humidity",
+      width: 150,
+      valueFormatter: (value) => {
+        return round(value, 3);
+      },
+    },
+    {
+      field: "create_date",
+      headerName: "Create Date",
+      width: 200,
+      valueFormatter: (value) => {
+        return moment(value.value).format("DD-MM-YYYY HH:mm:ss");
+      },
+    },
+  ];
   return (
     <Box sx={{ minHeight: "100vh" }}>
       <AuthBackground />
@@ -107,6 +154,9 @@ export default function Welcome() {
          
           </Typography> */}
         </span>
+        <br />
+        <br />
+        <span>|{moment(date).format("MMMM Do YYYY, h:mm:ss a")}|</span>
       </div>
       <Row className="mb-5" style={{ padding: 20 }}>
         <Col sm={4}>
@@ -189,6 +239,32 @@ export default function Welcome() {
           </Typography> */}
         </span>
       </div>
+      <br />
+      <br />
+      <div style={{ padding: 20 }}>
+        {data && (
+          <DataGrid
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: "primary.light",
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            columns={columns}
+            rows={data}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 10, page: 0 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 20]}
+          />
+        )}
+      </div>
+
       {/* </Grid> */}
       <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
         <AuthFooter />

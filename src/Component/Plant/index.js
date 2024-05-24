@@ -1,31 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row, Table } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import {
-  approveUserApi,
   createMasterPlantApi,
   deleteMasterPlantApi,
-  deleteUserApi,
-  downloadQrByIdApi,
-  getAllMasterProductApi,
-  getAllUserApi,
   getMasterPlantApi,
-  getUsersApi,
-  registerUserApi,
-  registerUserapi,
   setStatusActiveMasterPlant,
   updateMasterPlantApi,
-  updateUserApi,
 } from "../../Config/API";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { ApprovalRounded, Delete, Edit } from "@mui/icons-material";
-import moment from "moment/moment";
 
 const style = {
   position: "absolute",
@@ -45,6 +35,7 @@ function Plant() {
   const [actions, setActions] = useState(0);
   const [edit, setEdit] = useState("");
   const [open, setOpen] = useState(false);
+  const [plantId, setPlantId] = useState("");
 
   const navigate = useNavigate();
 
@@ -142,6 +133,7 @@ function Plant() {
       // Update the state variables with the plant data
       setEdit(id); // Set the ID of the plant to be edited
       setName(plant.plant_name); // Set the name of the plant to be edited
+      setPlantId(plant.plant_id);
 
       // Open the modal for editing
       setOpen(true);
@@ -170,6 +162,7 @@ function Plant() {
   }, [actions]);
 
   const columns = [
+    { field: "plant_id", headerName: "Plant ID", width: 150 },
     { field: "plant_name", headerName: "Plant Name", width: 150 },
     {
       field: "status",
@@ -222,8 +215,15 @@ function Plant() {
 
   const handleRegisterUser = (e) => {
     e.preventDefault();
+    const checkPlantId = tablePlant.find((plant) => plant.plant_id === plantId);
+    if (checkPlantId) {
+      window.alert("Plant ID sudah ada");
+      return;
+    }
+
     const data = {
       plant_name: name,
+      plant_id: plantId,
       create_by: "Admin",
       update_by: "Admin",
     };
@@ -333,6 +333,19 @@ function Plant() {
             <Form onSubmit={edit ? handleUpdate : handleRegisterUser}>
               <Row className="mb-3">
                 <Form.Group as={Col}>
+                  <Form.Label>Plant ID</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    value={plantId}
+                    placeholder={"Enter Plant ID"}
+                    onChange={(e) => setPlantId(e.target.value)}
+                    disabled={edit ? true : false}
+                  />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col}>
                   <Form.Label>Plant Name</Form.Label>
                   <Form.Control
                     required
@@ -343,6 +356,7 @@ function Plant() {
                   />
                 </Form.Group>
               </Row>
+
               <Row style={{ textAlign: "right" }}>
                 <Col>
                   <Button type="submit">Save</Button>

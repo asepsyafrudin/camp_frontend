@@ -6,45 +6,9 @@ import { Badge } from "react-bootstrap";
 function GraphGauge(props) {
   const { id, type, data } = props;
 
-  const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    if (data.length > 0) {
-      if (type === "ph") {
-        const currentValue = data[data.length - 1].ph;
-        if (currentValue > 8) {
-          setStatus("High");
-        } else if (currentValue > 5) {
-          setStatus("Good");
-        } else {
-          setStatus("Low");
-        }
-      } else if (type === "temperature") {
-        const currentValue = data[data.length - 1].temperature;
-        if (currentValue > 40) {
-          setStatus("High");
-        } else if (currentValue > 10) {
-          setStatus("Good");
-        } else {
-          setStatus("Low");
-        }
-      } else if (type === "humidity") {
-        const currentValue = data[data.length - 1].humidity;
-        if (currentValue > 60) {
-          setStatus("High");
-        } else if (currentValue > 40) {
-          setStatus("Good");
-        } else {
-          setStatus("Low");
-        }
-      }
-    }
-  }, [data.length]);
-
   if (data.length > 0) {
     if (type === "ph") {
       const currentValue = data[data.length - 1].ph;
-
       var dataGraph = [
         {
           type: "indicator",
@@ -65,15 +29,15 @@ function GraphGauge(props) {
             },
             steps: [
               {
-                color: "red",
+                color: "yellow",
                 range: [0, 5],
               },
               {
-                color: "pink",
+                color: "green",
                 range: [5, 8],
               },
               {
-                color: "purple",
+                color: "red",
                 range: [8, 14],
               },
             ],
@@ -154,15 +118,15 @@ function GraphGauge(props) {
             },
             steps: [
               {
-                color: "red",
+                color: "yellow",
                 range: [0, 10],
               },
               {
-                color: "pink",
+                color: "green",
                 range: [10, 40],
               },
               {
-                color: "purple",
+                color: "red",
                 range: [40, 100],
               },
             ],
@@ -243,15 +207,15 @@ function GraphGauge(props) {
             },
             steps: [
               {
-                color: "red",
+                color: "yellow",
                 range: [0, 40],
               },
               {
-                color: "pink",
+                color: "green",
                 range: [40, 60],
               },
               {
-                color: "purple",
+                color: "red",
                 range: [60, 100],
               },
             ],
@@ -312,24 +276,79 @@ function GraphGauge(props) {
     }
   }
 
+  const statusFunction = () => {
+    if (data.length > 0) {
+      if (type === "ph") {
+        const currentValue = data[data.length - 1].ph;
+        if (currentValue > 8) {
+          return (
+            <h2>
+              <Badge bg="danger">High</Badge>
+            </h2>
+          );
+        } else if (currentValue > 5) {
+          return (
+            <h2>
+              <Badge bg="success">Good</Badge>
+            </h2>
+          );
+        } else {
+          return (
+            <h2>
+              <Badge bg="warning">Low</Badge>
+            </h2>
+          );
+        }
+      } else if (type === "temperature") {
+        const currentValue = data[data.length - 1].temperature;
+        if (currentValue > 40) {
+          return (
+            <h2>
+              <Badge bg="danger">High</Badge>
+            </h2>
+          );
+        } else if (currentValue > 10) {
+          return (
+            <h2>
+              <Badge bg="success">Good</Badge>
+            </h2>
+          );
+        } else {
+          return (
+            <h2>
+              <Badge bg="warning">Low</Badge>
+            </h2>
+          );
+        }
+      } else if (type === "humidity") {
+        const currentValue = data[data.length - 1].humidity;
+        if (currentValue > 60) {
+          return (
+            <h2>
+              <Badge bg="danger">High</Badge>
+            </h2>
+          );
+        } else if (currentValue > 40) {
+          return (
+            <h2>
+              <Badge bg="success">Good</Badge>
+            </h2>
+          );
+        } else {
+          return (
+            <h2>
+              <Badge bg="warning">Low</Badge>
+            </h2>
+          );
+        }
+      }
+    }
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <div id={props.id}></div>
-      {status === "High" && (
-        <h2>
-          <Badge bg="danger">High</Badge>
-        </h2>
-      )}
-      {status === "Good" && (
-        <h2>
-          <Badge bg="success">Good</Badge>
-        </h2>
-      )}
-      {status === "Low" && (
-        <h2>
-          <Badge bg="warning">Low</Badge>
-        </h2>
-      )}
+      {statusFunction()}
     </div>
   );
 }

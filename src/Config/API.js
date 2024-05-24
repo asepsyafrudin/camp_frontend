@@ -31,3 +31,4 @@ export const setStatusActiveMasterPlant = (id) => {
 //master setting
 export const getMasterSettingApi = `${serverPort}/api/master_setting/getMasterSetting`;
 export const updateMasterSettingApi = `${serverPort}/api/master_setting/update`;
+    
