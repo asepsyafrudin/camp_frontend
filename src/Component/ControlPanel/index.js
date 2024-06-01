@@ -88,6 +88,7 @@ function ControlPanel() {
           <thead>
             <tr>
               <th>No</th>
+              <th>Setting ID</th>
               <th>Key</th>
               <th>Status</th>
               <th>Settings</th>
@@ -97,6 +98,7 @@ function ControlPanel() {
             {tableSetting.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
+                <th>{item.settings_id}</th>
                 <td>{item.category}</td>
                 <td>{item.status === 1 ? "ON" : "OFF"}</td>
                 <td>

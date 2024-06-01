@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function GraphLine(props) {
   const { id, type, data } = props;
   if (data.length > 0) {
-    const xData = data.map((item) => item.id);
+    const xData = data.map((item) => item.create_date);
     if (type === "ph") {
       const yData = data.map((item) => item.ph);
 

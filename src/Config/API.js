@@ -1,5 +1,7 @@
-export const serverPort = "http://localhost:8080";
+// export const serverPort = "http://localhost:8080";
 // export const socketPort = "http://localhost:8000";
+
+export const serverPort = "https://api.camp2.com"; //sesuaikan sama alamat di server
 
 //login
 export const loginUserApi = `${serverPort}/api/login`;
@@ -31,4 +33,3 @@ export const setStatusActiveMasterPlant = (id) => {
 //master setting
 export const getMasterSettingApi = `${serverPort}/api/master_setting/getMasterSetting`;
 export const updateMasterSettingApi = `${serverPort}/api/master_setting/update`;
-    

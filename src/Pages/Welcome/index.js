@@ -69,6 +69,7 @@ export default function Welcome() {
       })
       .then((response) => {
         setData(response.data.data);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -121,7 +122,7 @@ export default function Welcome() {
       headerName: "Create Date",
       width: 200,
       valueFormatter: (value) => {
-        return moment(value.value).format("DD-MM-YYYY HH:mm:ss");
+        return moment(value).format("DD-MM-YYYY HH:mm:ss");
       },
     },
   ];

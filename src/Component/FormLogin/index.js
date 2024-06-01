@@ -185,13 +185,13 @@ export default function FormLogin({ isDemo = false }) {
                       <Typography variant="h6">Keep me sign in</Typography>
                     }
                   />
-                  <Link
+                  {/* <Link
                     variant="h6"
                     component={RouterLink}
                     color="text.primary"
                   >
                     Forgot Password?
-                  </Link>
+                  </Link> */}
                 </Stack>
               </Grid>
               {errors.submit && (
