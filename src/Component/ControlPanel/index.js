@@ -96,7 +96,7 @@ function ControlPanel() {
           </thead>
           <tbody>
             {tableSetting.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <th>{item.settings_id}</th>
                 <td>{item.category}</td>
