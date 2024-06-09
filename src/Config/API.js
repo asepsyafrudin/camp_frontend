@@ -1,7 +1,7 @@
 // export const serverPort = "http://localhost:8080";
 // export const socketPort = "http://localhost:8000";
 
-export const serverPort = "https://api.camp2.com"; //sesuaikan sama alamat di server
+export const serverPort = "http://103.191.63.246:8000"; //sesuaikan sama alamat di server
 
 //login
 export const loginUserApi = `${serverPort}/api/login`;
